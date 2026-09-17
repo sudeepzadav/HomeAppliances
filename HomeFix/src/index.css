@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme{
+    --color-primary: #2563EB;
+}
+
+
+@layer component{
+    .btn-primary{
+        @apply  text-lg text-black border px-4 py-2 rounded-xl flex items-center gap-3 font-semibold;
+    }
+}
