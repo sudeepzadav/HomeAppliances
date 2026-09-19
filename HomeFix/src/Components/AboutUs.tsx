@@ -81,8 +81,9 @@ export default function AboutUs() {
   return (
     <div className="bg-white text-slate-900">
       {/* Hero */}
-      <section className="mx-auto  px-6 pt-20 pb-16">
-        <span className="inline-block rounded-full bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-600">
+      <section className="mx-auto  px-6 pt-20 pb-16 ">
+        <div>
+          <span className="inline-block rounded-full bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-600">
           About HomeFix
         </span>
         <h1 className="mt-6 max-w-3xl text-5xl font-bold leading-[1.1] tracking-tight sm:text-6xl">
@@ -95,6 +96,10 @@ export default function AboutUs() {
           built a service where booking is simple, technicians are trained,
           and your appliance actually gets fixed on the first visit.
         </p>
+        </div>
+        <div>
+          <p>fhjkla</p>
+        </div>
       </section>
 
       {/* Stats bar */}
@@ -189,11 +194,11 @@ export default function AboutUs() {
       </section>
 
       {/* Timeline */}
-      <section className="px-6 py-20">
+      <section className="ml-5 px-6 py-20">
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
           How we got here
         </h2>
-        <div className="mt-10 space-y-8 border-l border-slate-200 pl-8">
+        <div className="mt-10 ml-10 space-y-8 border-l border-slate-200 pl-8">
           {timeline.map((item) => (
             <div key={item.year} className="relative">
               <div className="absolute -left-9.25 top-1.5 h-2.5 w-2.5 rounded-full bg-blue-600" />
