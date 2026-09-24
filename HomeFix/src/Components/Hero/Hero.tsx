@@ -1,5 +1,6 @@
 import { FaArrowRight, FaCalendarAlt } from "react-icons/fa";
 import { heroImage } from "../../Constants/image";
+import { useNavigate } from "react-router";
 
 const avatars = [
   "https://i.pravatar.cc/150?img=1",
@@ -9,6 +10,7 @@ const avatars = [
 ];
 
 const Hero = () => {
+  const navigate = useNavigate();
   return (
     <section className="w-full overflow-hidden bg-linear-to-br from-white via-slate-50 to-blue-50 py-10 sm:py-14 lg:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-12">
@@ -40,7 +42,8 @@ const Hero = () => {
                 Book a Service
               </button>
 
-              <button className="flex w-full sm:w-auto items-center justify-center gap-3 rounded-xl border border-gray-300 bg-white px-5 py-3 sm:px-6 sm:py-4 text-sm sm:text-base font-semibold text-gray-700 transition hover:border-primary hover:text-primary">
+              <button className="flex w-full sm:w-auto items-center justify-center gap-3 rounded-xl border border-gray-300 bg-white px-5 py-3 sm:px-6 sm:py-4 text-sm sm:text-base font-semibold text-gray-700 transition hover:border-primary hover:text-primary"
+              onClick={() => navigate("/about")}>
                 Learn More
                 <FaArrowRight />
               </button>

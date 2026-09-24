@@ -4,7 +4,7 @@ import { HiUsers } from "react-icons/hi"
 
 const Hero2 = () => {
   return (
-    <div className="px-4 sm:px-10 py-6 lg:absolute right-10 top-200 w-[95%]">
+    <div className="px-4 sm:px-10 py-6 lg:absolute right-10 top-190 w-[95%]">
       <div className="bg-gray-200 rounded-2xl shadow-md p-4 sm:p-6">
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
