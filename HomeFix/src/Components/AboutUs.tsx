@@ -20,7 +20,7 @@ interface Value {
   icon: LucideIcon;
   title: string;
   description: string;
-  span: string; // grid span classes for the bento layout
+  span: string; 
   featured?: boolean;
 }
 
@@ -99,7 +99,7 @@ export default function AboutUs() {
 
   return (
     <div className="bg-white text-slate-900">
-      {/* HERO */}
+      
       <section className="relative overflow-hidden bg-linear-to-br from-white via-slate-50 to-blue-50">
         <div className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-blue-200/40 blur-3xl" />
 
@@ -136,7 +136,7 @@ export default function AboutUs() {
             </div>
           </div>
 
-          {/* Service ticket: shows what a HomeFix visit looks like */}
+          
           <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:ml-auto">
             <div className="rotate-1 rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl shadow-slate-900/10 sm:p-8">
               <div className="flex items-start justify-between gap-4">
@@ -194,7 +194,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* STATS */}
+     
       <section className="bg-blue-600 mx-20 border-0 rounded-lg">
         <div className="container mx-auto grid grid-cols-2 gap-x-6 gap-y-10 px-4 py-12 sm:px-6 lg:grid-cols-4 lg:px-12">
           {stats.map((stat) => (
@@ -208,7 +208,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* MISSION */}
+      
       <section className="container mx-auto px-4 py-20 sm:px-6 lg:px-12 lg:py-28">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
           <div>
@@ -304,7 +304,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* TIMELINE */}
+      
       <section className="container mx-auto px-4 py-20 sm:px-6 lg:px-12 lg:py-28">
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
           How we got here
@@ -328,7 +328,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* CTA */}
+      
       <section className="container mx-auto px-4 pb-24 sm:px-6 lg:px-12">
         <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-blue-600 to-blue-800 px-8 py-12 sm:px-12">
           <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/10" />

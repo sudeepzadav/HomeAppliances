@@ -1,5 +1,12 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
-import { Phone, Mail, MapPin, Clock, Send, type LucideIcon } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  Send,
+  type LucideIcon,
+} from "lucide-react";
 
 interface ContactCard {
   icon: LucideIcon;
@@ -56,7 +63,7 @@ export default function ContactUs() {
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   function handleChange(
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ): void {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -80,8 +87,8 @@ export default function ContactUs() {
           Tell us what's broken.
         </h1>
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600">
-          Call us for same-day service, or send a message below and a member
-          of our team will get back to you shortly.
+          Call us for same-day service, or send a message below and a member of
+          our team will get back to you shortly.
         </p>
       </section>
 
@@ -125,9 +132,7 @@ export default function ContactUs() {
 
             {submitted ? (
               <div className="mt-8 rounded-2xl border border-blue-100 bg-blue-50 p-6">
-                <p className="font-semibold text-blue-700">
-                  Message sent.
-                </p>
+                <p className="font-semibold text-blue-700">Message sent.</p>
                 <p className="mt-1 text-sm text-blue-600">
                   We'll reach out to you shortly at the number you provided.
                 </p>
