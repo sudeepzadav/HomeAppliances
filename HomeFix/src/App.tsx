@@ -19,6 +19,9 @@ import {
 import AboutUs from "./Components/AboutUs";
 import Auth from "./Pages/auth";
 import Booking from "./Pages/Booking";
+import CustomerDashboard from "./Pages/CustomerDashboard";
+import ProviderDashboard from "./Pages/ProviderDashboard";
+import AdminDashboard from "./Pages/AdminDashboard";
 
 const getStoredUser = () => {
   try {
@@ -30,10 +33,16 @@ const getStoredUser = () => {
   }
 };
 
+const hasRole = (user: any, role: string) =>
+  !!user && typeof user.role === "string" && user.role.trim().toLowerCase() === role.toLowerCase();
+
 const App = () => {
   const [user, setUser] = useState<any>(getStoredUser());
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  // 🔍 DIAGNOSTIC LOG — remove once the bug is confirmed/fixed
+  console.log("App render — user:", user, "pathname:", pathname);
 
   const hideLayout = pathname === "/login" || pathname === "/signup";
 
@@ -42,6 +51,13 @@ const App = () => {
     localStorage.removeItem("user");
     setUser(null);
     navigate("/");
+  };
+
+  const getDashboardRedirect = () => {
+    if (!user) return <Navigate to="/login" replace />;
+    if (hasRole(user, "Admin")) return <Navigate to="/admin-dashboard" replace />;
+    if (hasRole(user, "Provider")) return <Navigate to="/provider-dashboard" replace />;
+    return <Navigate to="/booking" replace />;
   };
 
   return (
@@ -67,12 +83,57 @@ const App = () => {
         <Route
           path="/booking"
           element={
-            user ? <Booking user={user} /> : <Navigate to="/login" replace />
+            !user ? (
+              <Navigate to="/login" replace />
+            ) : hasRole(user, "Customer") ? (
+              <Booking user={user} />
+            ) : (
+              <Navigate to="/" replace />
+            )
           }
         />
 
-        <Route path="/login" element={<Auth setUser={setUser} />} />
-        <Route path="/signup" element={<Auth setUser={setUser} />} />
+        <Route
+          path="/provider-dashboard"
+          element={
+            hasRole(user, "Provider") ? (
+              <ProviderDashboard user={user} />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+
+        <Route
+          path="/admin-dashboard"
+          element={
+            hasRole(user, "Admin") ? (
+              <AdminDashboard user={user} />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+
+        <Route
+          path="/my-bookings"
+          element={
+            hasRole(user, "Customer") ? (
+              <CustomerDashboard user={user} />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+
+        <Route
+          path="/login"
+          element={user ? getDashboardRedirect() : <Auth setUser={setUser} />}
+        />
+        <Route
+          path="/signup"
+          element={user ? getDashboardRedirect() : <Auth setUser={setUser} />}
+        />
 
         <Route path="*" element={<h1>404 - Page not found</h1>} />
       </Routes>

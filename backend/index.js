@@ -3,6 +3,7 @@ const cors = require("cors");
 const ConnectDb = require("./config/ConfigDB");
 require("dotenv").config();
 const userRouter = require("./router/userRouter")
+const bookingRouter = require("./router/bookingRouter")
 
 const app = express();
 app.use(cors());
@@ -14,6 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("api/v1/user", userRouter);
+app.use("/api/v1/booking", bookingRouter);
 
 
 app.listen(PORT, () => {

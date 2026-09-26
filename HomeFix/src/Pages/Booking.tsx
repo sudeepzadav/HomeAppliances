@@ -33,7 +33,7 @@ const timeSlots = [
 const inputClass =
   "w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100";
 
-// Today's date as YYYY-MM-DD in local time (used to block past dates)
+
 const getToday = () => {
   const d = new Date();
   const month = String(d.getMonth() + 1).padStart(2, "0");

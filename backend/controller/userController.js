@@ -1,9 +1,11 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../model/userSchema");
-function generateToken(payload){
-    return jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: "7d"});
+
+function generateToken(payload) {
+  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "7d" });
 }
+
 // -------------------------------------------
 //                Signup
 // -------------------------------------------
@@ -55,18 +57,17 @@ async function login(req, res) {
   try {
     const { email, password } = req.body;
 
-    if(!email || !password ){
+    if (!email || !password) {
       return res.status(400).json({ success: false, message: "Email and password are required" });
     }
 
-    const user = await user.findOne({ email: email.toLowerCase() });
-    if(!User){
+    const user = await User.findOne({ email: email.toLowerCase() });
+    if (!user) {
       return res.status(401).json({ success: false, message: "Invalid credentials" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-
-    if(!isMatch){
+    if (!isMatch) {
       return res.status(401).json({ success: false, message: "Invalid credentials" });
     }
 
@@ -90,13 +91,13 @@ async function login(req, res) {
 }
 
 // -------------------------------------------
-//                Login
+//                Get Me
 // -------------------------------------------
-async function getMe( req, res ) {
+async function getMe(req, res) {
   try {
     const user = await User.findById(req.user.id).select("-password");
 
-    if(!user){
+    if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
     }
     res.status(200).json({ success: true, user });
@@ -105,4 +106,5 @@ async function getMe( req, res ) {
     res.status(500).json({ success: false, message: "Failed to fetch user" });
   }
 }
-module.exports = {SignUp, login, getMe};
+
+module.exports = { SignUp, login, getMe };

@@ -14,12 +14,9 @@ const Hero = () => {
   return (
     <section className="w-full overflow-hidden bg-linear-to-br from-white via-slate-50 to-blue-50 py-10 sm:py-14 lg:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-
         <div className="flex flex-col-reverse lg:flex-row items-center gap-10 lg:gap-14">
-
           {/* TEXT SECTION */}
           <div className="w-full text-center lg:text-left space-y-5 sm:space-y-6">
-
             <div className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1.5 text-xs sm:text-sm font-medium text-primary">
               Trusted Home Appliance Service
             </div>
@@ -37,13 +34,21 @@ const Hero = () => {
 
             {/* BUTTONS */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
-              <button className="flex w-full sm:w-auto items-center justify-center gap-3 rounded-xl bg-primary px-5 py-3 sm:px-6 sm:py-4 text-sm sm:text-base font-semibold text-white shadow-lg transition hover:scale-105 hover:bg-primary/90">
+              <button
+                className="flex w-full sm:w-auto items-center justify-center gap-3 rounded-xl bg-primary px-5 py-3 sm:px-6 sm:py-4 text-sm sm:text-base font-semibold text-white shadow-lg transition hover:scale-105 hover:bg-primary/90"
+                onClick={() => {
+                  console.log("Book a Service clicked");
+                  navigate("/booking");
+                }}
+              >
                 <FaCalendarAlt />
                 Book a Service
               </button>
 
-              <button className="flex w-full sm:w-auto items-center justify-center gap-3 rounded-xl border border-gray-300 bg-white px-5 py-3 sm:px-6 sm:py-4 text-sm sm:text-base font-semibold text-gray-700 transition hover:border-primary hover:text-primary"
-              onClick={() => navigate("/about")}>
+              <button
+                className="flex w-full sm:w-auto items-center justify-center gap-3 rounded-xl border border-gray-300 bg-white px-5 py-3 sm:px-6 sm:py-4 text-sm sm:text-base font-semibold text-gray-700 transition hover:border-primary hover:text-primary"
+                onClick={() => navigate("/about")}
+              >
                 Learn More
                 <FaArrowRight />
               </button>
@@ -51,7 +56,6 @@ const Hero = () => {
 
             {/* CUSTOMER SECTION */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 pt-6">
-
               {/* AVATARS */}
               <div className="flex -space-x-3 sm:-space-x-4">
                 {avatars.map((src, i) => (
@@ -98,7 +102,6 @@ const Hero = () => {
 
           {/* IMAGE SECTION */}
           <div className="relative w-full flex justify-center lg:justify-end">
-
             <div className="absolute h-40 w-40 sm:h-64 sm:w-64 lg:h-80 lg:w-80 rounded-full bg-primary/20 blur-3xl"></div>
 
             <img
@@ -107,7 +110,6 @@ const Hero = () => {
               className="relative z-10 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl rounded-2xl object-cover shadow-2xl"
             />
           </div>
-
         </div>
       </div>
     </section>
