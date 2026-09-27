@@ -44,7 +44,7 @@ const Auth = ({ setUser }: AuthProps) => {
     setLoading(true);
 
     try {
-      const endpoint = isLogin ? "/auth/login" : "/auth/signup";
+      const endpoint = isLogin ? "/user/login" : "/user/signup";
       const payload = isLogin
         ? { email, password }
         : { name, email, password, role };
@@ -52,11 +52,14 @@ const Auth = ({ setUser }: AuthProps) => {
       const res = await axiosInstance.post(endpoint, payload);
       const { token, user } = res.data;
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
-
-      setUser(user);
-      navigate("/");
+      if (isLogin) {
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
+        setUser(user);
+        navigate("/");
+      } else {
+        switchMode("login");
+      }
     } catch (err: any) {
       setError(err.response?.data?.message || `${isLogin ? "Login" : "Signup"} failed`);
     } finally {
@@ -67,7 +70,6 @@ const Auth = ({ setUser }: AuthProps) => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-sm">
-        
         <div className="flex mb-6 border rounded-lg overflow-hidden">
           <button
             type="button"
@@ -109,7 +111,6 @@ const Auth = ({ setUser }: AuthProps) => {
                 required
               />
 
-              
               <div className="flex mb-4 border rounded-lg overflow-hidden">
                 <button
                   type="button"

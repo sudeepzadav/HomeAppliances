@@ -5,6 +5,7 @@ require("dotenv").config();
 const userRouter = require("./router/userRouter")
 const bookingRouter = require("./router/bookingRouter")
 
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -14,8 +15,8 @@ app.get("/", (req, res) => {
   res.send("Backend is running");
 });
 
-app.use("api/v1/user", userRouter);
-app.use("/api/v1/booking", bookingRouter);
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/bookings", bookingRouter);
 
 
 app.listen(PORT, () => {
