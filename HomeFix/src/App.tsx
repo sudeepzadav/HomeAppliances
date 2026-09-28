@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactElement } from "react";
 import {
   Navigate,
   Route,
@@ -34,15 +34,30 @@ const getStoredUser = () => {
 };
 
 const hasRole = (user: any, role: string) =>
-  !!user && typeof user.role === "string" && user.role.trim().toLowerCase() === role.toLowerCase();
+  !!user &&
+  typeof user.role === "string" &&
+  user.role.trim().toLowerCase() === role.toLowerCase();
+
+// Only renders children if the user is logged in AND has the required role.
+// Logged-out users go to /login; logged-in users with the wrong role go home.
+const ProtectedRoute = ({
+  user,
+  role,
+  children,
+}: {
+  user: any;
+  role: string;
+  children: ReactElement;
+}) => {
+  if (!user) return <Navigate to="/login" replace />;
+  if (!hasRole(user, role)) return <Navigate to="/" replace />;
+  return children;
+};
 
 const App = () => {
   const [user, setUser] = useState<any>(getStoredUser());
   const { pathname } = useLocation();
   const navigate = useNavigate();
-
-  // 🔍 DIAGNOSTIC LOG — remove once the bug is confirmed/fixed
-  console.log("App render — user:", user, "pathname:", pathname);
 
   const hideLayout = pathname === "/login" || pathname === "/signup";
 
@@ -53,10 +68,13 @@ const App = () => {
     navigate("/");
   };
 
+  // Where to send a logged-in user who visits /login or /signup
   const getDashboardRedirect = () => {
     if (!user) return <Navigate to="/login" replace />;
-    if (hasRole(user, "Admin")) return <Navigate to="/admin-dashboard" replace />;
-    if (hasRole(user, "Provider")) return <Navigate to="/provider-dashboard" replace />;
+    if (hasRole(user, "Admin"))
+      return <Navigate to="/admin-dashboard" replace />;
+    if (hasRole(user, "Provider"))
+      return <Navigate to="/provider-dashboard" replace />;
     return <Navigate to="/booking" replace />;
   };
 
@@ -80,52 +98,45 @@ const App = () => {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<ContactUs />} />
 
+        {/* Customer */}
         <Route
           path="/booking"
           element={
-            !user ? (
-              <Navigate to="/login" replace />
-            ) : hasRole(user, "Customer") ? (
+            <ProtectedRoute user={user} role="Customer">
               <Booking user={user} />
-            ) : (
-              <Navigate to="/" replace />
-            )
+            </ProtectedRoute>
           }
         />
-
-        <Route
-          path="/provider-dashboard"
-          element={
-            hasRole(user, "Provider") ? (
-              <ProviderDashboard user={user} />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
-
-        <Route
-          path="/admin-dashboard"
-          element={
-            hasRole(user, "Admin") ? (
-              <AdminDashboard user={user} />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
-
         <Route
           path="/my-bookings"
           element={
-            hasRole(user, "Customer") ? (
+            <ProtectedRoute user={user} role="Customer">
               <CustomerDashboard user={user} />
-            ) : (
-              <Navigate to="/login" replace />
-            )
+            </ProtectedRoute>
           }
         />
 
+        {/* Provider */}
+        <Route
+          path="/provider-dashboard"
+          element={
+            <ProtectedRoute user={user} role="Provider">
+              <ProviderDashboard user={user} />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Admin */}
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedRoute user={user} role="Admin">
+              <AdminDashboard user={user} />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Auth */}
         <Route
           path="/login"
           element={user ? getDashboardRedirect() : <Auth setUser={setUser} />}
