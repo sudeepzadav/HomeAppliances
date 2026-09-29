@@ -96,9 +96,7 @@ async function updateBookingStatus(req, res) {
   }
 }
 
-// -------------------------------------------
-//      ADMIN: ASSIGN A PROVIDER TO A BOOKING
-// -------------------------------------------
+
 async function assignProvider(req, res) {
   try {
     const { bookingId } = req.params;
