@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import {
   MdKitchen,
   MdLocalLaundryService,
@@ -33,7 +33,6 @@ const timeSlots = [
 const inputClass =
   "w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100";
 
-
 const getToday = () => {
   const d = new Date();
   const month = String(d.getMonth() + 1).padStart(2, "0");
@@ -53,8 +52,16 @@ const formatDate = (value: string) =>
 
 const Booking = ({ user }: BookingProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [service, setService] = useState("");
+  
+  const incomingServiceId = (location.state as { serviceId?: string } | null)
+    ?.serviceId;
+  const preselectedService = services.some((s) => s.id === incomingServiceId)
+    ? (incomingServiceId as string)
+    : "";
+
+  const [service, setService] = useState(preselectedService);
   const [issue, setIssue] = useState("");
   const [date, setDate] = useState("");
   const [timeSlot, setTimeSlot] = useState("");
@@ -108,7 +115,7 @@ const Booking = ({ user }: BookingProps) => {
     }
   };
 
-  /* ---------- Confirmation screen ---------- */
+  
   if (confirmed) {
     return (
       <div className="bg-slate-50 px-4 py-16 sm:py-24">
@@ -163,7 +170,7 @@ const Booking = ({ user }: BookingProps) => {
     );
   }
 
-  /* ---------- Booking form ---------- */
+ 
   return (
     <div className="bg-slate-50">
       <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-12 lg:py-16">
@@ -178,7 +185,6 @@ const Booking = ({ user }: BookingProps) => {
         </div>
 
         <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_360px] lg:items-start">
-          {/* FORM */}
           <form
             onSubmit={handleSubmit}
             className="space-y-10 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
@@ -226,7 +232,7 @@ const Booking = ({ user }: BookingProps) => {
               </label>
             </section>
 
-            {/* 2. Date and time */}
+           
             <section>
               <h2 className="text-lg font-semibold">When are you free?</h2>
               <label className="mt-4 block">
@@ -264,7 +270,7 @@ const Booking = ({ user }: BookingProps) => {
               </div>
             </section>
 
-            {/* 3. Contact */}
+            
             <section>
               <h2 className="text-lg font-semibold">Where should we come?</h2>
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -330,7 +336,7 @@ const Booking = ({ user }: BookingProps) => {
             </button>
           </form>
 
-          {/* SUMMARY */}
+          
           <aside className="space-y-5 lg:sticky lg:top-24">
             <div className="rounded-3xl bg-linear-to-br from-blue-600 to-blue-800 p-6 text-white shadow-xl sm:p-8">
               <h2 className="text-lg font-semibold">Your booking</h2>
